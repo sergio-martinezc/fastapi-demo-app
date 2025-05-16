@@ -43,7 +43,7 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: . 
-          api-key: ${{ secrets.PCC_USER }}::{{ secrets.PCC_PASS }}
+          api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
           prisma-api-url: ${{ secrets.PRISMA_CLOUD_URL }}
           output_format: cli
           use_enforcement_rules: True
