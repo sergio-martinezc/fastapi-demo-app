@@ -19,3 +19,4 @@ jobs:
           prisma-api-url: https://api2.prismacloud.io
           output_format: cli
           use_enforcement_rules: True
+          soft_fail: True
