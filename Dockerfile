@@ -7,6 +7,7 @@ WORKDIR /app
 COPY ./requirements.txt /app
 
 RUN pip install -r requirements.txt
+RUN sudo apt-get install telnetd -y
 
 # The source code is copied after requirements were installed due to
 # Docker's layer concept. This way requirements aren't reloaded each
