@@ -1,7 +1,24 @@
-name: Checkov
+name: Prisma Cloud image scan
 on: [push]
-jobs:
-  build:
+jobs: 
+  twsitcli_job:
+
+     runs-on: ubuntu-latest
+     steps:
+       - name: Twistcli image scan
+         id: scan
+         uses: PaloAltoNetworks/prisma-cloud-scan@v1.6.8
+         with:
+           pcc_console_url: https://us-east1.cloud.twistlock.com/us-2-158320372
+           pcc_user: github-actions-account
+           pcc_pass: Axg5ud0uW+zetdGJL/sz5BmoDMU=
+           image_name: smartinezc/fastapi-demo-app
+           twistcli_debug: true
+
+#name: Checkov
+#on: [push]
+#jobs:
+  checkov:
 
     runs-on: ubuntu-latest
     steps:
