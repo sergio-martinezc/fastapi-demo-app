@@ -13,20 +13,18 @@ jobs:
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v2
-        # Defaults are sufficient generally
-        # https://github.com/actions/checkout#usage
+        uses: actions/checkout@v4
 
       - name: Download twistcli from the Prisma Cloud Compute Console
         run: |
-          curl --user ${{ secrets.PCC_USER }}:Lez3TmiCany8BlnHCXkmxWURCFk= --output ./twistcli https://us-east1.cloud.twistlock.com/us-2-158320372/api/v1/util/twistcli
+          curl --user ${{ secrets.PCC_USER }}:${{ secrets.PCC_PASS }} --output ./twistcli  ${{ secrets.PCC_CONSOLE_URL }}/api/v1/util/twistcli
           chmod a+x ./twistcli
 
       - name: Build the image
         run: docker build -t $IMAGE_NAME .
 
       - name: Scan the image
-        run: ./twistcli images scan --address https://us-east1.cloud.twistlock.com/us-2-158320372 --user  ${{ secrets.PCC_USER }} --password Lez3TmiCany8BlnHCXkmxWURCFk= --details $IMAGE_NAME || true
+        run: ./twistcli images scan --address ${{ secrets.PCC_CONSOLE_URL }} --user  ${{ secrets.PCC_USER }} --password ${{ secrets.PCC_PASS }} --details $IMAGE_NAME || true
 
 #name: Checkov
 #on: [push]
@@ -45,8 +43,8 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: . 
-          api-key: ${{ secrets.PCC_USER }}::Lez3TmiCany8BlnHCXkmxWURCFk=
-          prisma-api-url: https://api2.prismacloud.io
+          api-key: ${{ secrets.PCC_USER }}::{{ secrets.PCC_PASS }}
+          prisma-api-url: ${{ secrets.PRISMA_CLOUD_URL }}
           output_format: cli
           use_enforcement_rules: True
           soft_fail: True
