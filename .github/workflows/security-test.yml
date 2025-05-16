@@ -1,7 +1,8 @@
 name: Prisma Cloud image scan
 on: [push]
 env:
-  pcc_console_url: https://us-east1.cloud.twistlock.com/us-2-158320372
+  #pcc_console_url: https://us-east1.cloud.twistlock.com/us-2-158320372
+  pcc_console_url: https://api2.prismacloud.io
   pcc_user: ace48371-89ca-4173-8c8f-4cef4d825485
   pcc_pass: Lez3TmiCany8BlnHCXkmxWURCFk=
   mage_name: smartinezc/fastapi-demo-app
