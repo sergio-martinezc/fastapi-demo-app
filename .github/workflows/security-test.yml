@@ -1,21 +1,32 @@
-name: Prisma Cloud image scan
-on: [push]
-env:
-  #pcc_console_url: https://us-east1.cloud.twistlock.com/us-2-158320372
-  pcc_console_url: https://api2.prismacloud.io
-  pcc_user: ace48371-89ca-4173-8c8f-4cef4d825485
-  pcc_pass: Lez3TmiCany8BlnHCXkmxWURCFk=
-  mage_name: smartinezc/fastapi-demo-app
-     
-jobs: 
-  twsitcli_job:
+name: Prisma Cloud Compute Image Scan
 
-     runs-on: ubuntu-latest
-     steps:
-       - name: Twistcli image scan
-         id: scan
-         uses: PaloAltoNetworks/prisma-cloud-scan@v1.6.8
-     
+on: [push]
+
+env:
+  IMAGE_NAME: smartinezc/fastapi-demo-app
+
+jobs:
+  # Jobs are ran independently from each other, so build and scan needs to be in a single job.
+  build-and-scan:
+    name: Build and scan image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+        # Defaults are sufficient generally
+        # https://github.com/actions/checkout#usage
+
+      - name: Download twistcli from the Prisma Cloud Compute Console
+        run: |
+          curl --user ace48371-89ca-4173-8c8f-4cef4d825485:Lez3TmiCany8BlnHCXkmxWURCFk= --output ./twistcli https://us-east1.cloud.twistlock.com/us-2-158320372/api/v1/util/twistcli
+          chmod a+x ./twistcli
+
+      - name: Build the image
+        run: docker build -t $IMAGE_NAME .
+
+      - name: Scan the image
+        run: ./twistcli images scan --address https://us-east1.cloud.twistlock.com/us-2-158320372 --user  ace48371-89ca-4173-8c8f-4cef4d825485 --password :Lez3TmiCany8BlnHCXkmxWURCFk= --details $IMAGE_NAME
 
 #name: Checkov
 #on: [push]
