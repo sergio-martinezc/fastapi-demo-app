@@ -26,7 +26,7 @@ jobs:
         run: docker build -t $IMAGE_NAME .
 
       - name: Scan the image
-        run: ./twistcli images scan --address https://us-east1.cloud.twistlock.com/us-2-158320372 --user  ace48371-89ca-4173-8c8f-4cef4d825485 --password :Lez3TmiCany8BlnHCXkmxWURCFk= --details $IMAGE_NAME
+        run: ./twistcli images scan --address https://us-east1.cloud.twistlock.com/us-2-158320372 --user  ace48371-89ca-4173-8c8f-4cef4d825485 --password Lez3TmiCany8BlnHCXkmxWURCFk= --details $IMAGE_NAME
 
 #name: Checkov
 #on: [push]
