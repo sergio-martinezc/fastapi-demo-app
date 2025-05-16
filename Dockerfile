@@ -7,10 +7,8 @@ WORKDIR /app
 COPY ./requirements.txt /app
 
 RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install telnet -y && apt-get install netcat-traditional -y
 
-# The source code is copied after requirements were installed due to
-# Docker's layer concept. This way requirements aren't reloaded each
-# time we change the source code.
 COPY ./src /app/src
 
 ENV CSV_FILE="./src/data/courses.csv"
