@@ -4,7 +4,7 @@ on: [push]
   
 env: 
   IMAGE_NAME: smartinezc/fastapi-demo-app-nc:3.0
-
+  
 jobs:
   build-and-scan:
     name: Build and scan image
