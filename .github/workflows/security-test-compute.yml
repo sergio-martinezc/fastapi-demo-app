@@ -1,50 +1,27 @@
 name: Prisma Cloud Compute Image Scan  
 
 on: [push]  
+   
+env:   
+  IMAGE_NAME: smartinezc/fastapi-demo-app-nc:3.0
   
-env: 
-  IMAGE_NAME: smartinezc/fastapi-demo-app
-
 jobs:
   # Jobs are ran independently from each other, so build and scan needs to be in a single job.
   build-and-scan:
     name: Build and scan image
     runs-on: ubuntu-latest
- 
+  
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
 
       - name: Download twistcli from the Prisma Cloud Compute Console
         run: |
-          curl --user ${{ secrets.PCC_USER }}:${{ secrets.PCC_PASS }} --output ./twistcli  ${{ secrets.PCC_CONSOLE_URL }}/api/v1/util/twistcli
+          curl --insecure --user ${{ secrets.PCC_USER_CE }}:${{ secrets.PCC_PASS_CE }} --output ./twistcli  ${{ secrets.PCC_CONSOLE_URL_CE }}/api/v1/util/twistcli
           chmod a+x ./twistcli
 
       - name: Build the image
         run: docker build -t $IMAGE_NAME .
 
       - name: Scan the image
-        run: ./twistcli images scan --address ${{ secrets.PCC_CONSOLE_URL }} --user  ${{ secrets.PCC_USER }} --password ${{ secrets.PCC_PASS }} --details $IMAGE_NAME
-
-#name: Checkov
-#on: [push]
-#jobs:
-  checkov: 
-    needs: build-and-scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-      - name: Test with Checkov
-        id: checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: . 
-          api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
-          prisma-api-url: ${{ secrets.PRISMA_CLOUD_URL }}
-          output_format: cli
-          use_enforcement_rules: True
-          soft_fail: True
+        run: ./twistcli images scan --address ${{ secrets.PCC_CONSOLE_URL_CE }} --user  ${{ secrets.PCC_USER_CE }} --password ${{ secrets.PCC_PASS_CE }} --details $IMAGE_NAME
