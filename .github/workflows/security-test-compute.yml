@@ -6,22 +6,22 @@ env:
   IMAGE_NAME: smartinezc/fastapi-demo-app-nc:3.0
   
 jobs:
+  # Jobs are ran independently from each other, so build and scan needs to be in a single job.
   build-and-scan:
     name: Build and scan image
     runs-on: ubuntu-latest
-
+ 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Download twistcli from the Prisma Cloud Compute Console
+        run: |
+          curl --user ${{ secrets.PCC_USER_CE }}:${{ secrets.PCC_PASS_CE }} --output ./twistcli  ${{ secrets.PCC_CONSOLE_URL_CE }}/api/v1/util/twistcli
+          chmod a+x ./twistcli
 
       - name: Build the image
         run: docker build -t $IMAGE_NAME .
 
-      - name: Prisma Cloud image scan
-        id: scan
-        uses: PaloAltoNetworks/prisma-cloud-scan@v1.5
-        with:
-          pcc_console_url: ${{ secrets.PCC_CONSOLE_URL_CE }}
-          pcc_user: ${{ secrets.PCC_USER_CE }}
-          pcc_pass: ${{ secrets.PCC_PASS_CE }}
-          image_name: ${{ env.IMAGE_NAME }}
+      - name: Scan the image
+        run: ./twistcli images scan --address ${{ secrets.PCC_CONSOLE_URL_CE }} --user  ${{ secrets.PCC_USERa_CE }} --password ${{ secrets.PCC_PASS_CE }} --details $IMAGE_NAME
