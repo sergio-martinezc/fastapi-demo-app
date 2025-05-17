@@ -1,6 +1,21 @@
-id;name;price;is_early_bird
-1;"Python";5,99;true
-2;"FastAPI";16,99;true
-3;"Docker";12,99;true
-4;"Pandas";12,99;false
-5;"Git";5,99;false
+id;name;price;is_early_bird;email;password
+1;"Python";5.99;true;python@email.com;qwsipm
+2;"FastAPI";16.99;true;fastapi@email.com;gbtubqj
+3;"Docker";12.99;true;docker@email.com;epdlfs
+4;"Kubernetes";29.50;false;k8s@techmail.com;rtyuvb
+5;"Terraform";19.99;true;terraform@cloud.org;asdfgh
+6;"AWS Fundamentals";49.00;true;aws@learn.net;zxcvbn
+7;"Azure Basics";35.75;false;azure@digital.io;hjklmn
+8;"Google Cloud 101";42.25;true;gcp@innovate.com;poiuyt
+9;"React";14.50;true;react@frontend.dev;lkjhgf
+10;"Angular";18.00;false;angular@web.pro;mnbvcxz
+11;"Vue.js";11.25;true;vue@script.js;qwerty
+12;"Node.js";22.99;false;node@server.com;yuiop
+13;"SQL Basics";9.99;true;sql@database.info;ghjkl
+14;"NoSQL";15.50;false;nosql@data.net;sdfgh
+15;"Git & Version Control";7.75;true;git@code.org;cvbnm
+16;"Linux Command Line";10.50;true;linux@os.dev;bnmkl
+17;"Cybersecurity Intro";39.99;false;security@protect.net;asdzxc
+18;"Data Science with Pandas";27.00;true;pandas@analyze.org;plmokn
+19;"Machine Learning Basics";31.50;false;ml@ai.tech;zaqxsw
+20;"Cloud Security";45.00;true;cloudsec@secure.io;jklpoi

@@ -23,6 +23,7 @@ class Course(BaseModel):
     name: str
     price: float
     is_early_bird: Optional[bool] = None
+    email: str
 
 @app.get("/")
 def read_root():
