@@ -1,6 +1,6 @@
 name: Prisma Cloud Compute Image Scan  
 
-on: [push]  
+on: [push]   
    
 env:   
   IMAGE_NAME: smartinezc/fastapi-demo-app-nc:3.0
