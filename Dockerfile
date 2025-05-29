@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install dependencies
 # FastAPI is already installed in the base image but pandas for example isn't
-COPY ./requirements.txt /app/
+COPY ./requirements.txt /app
 
 RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install telnet -y && apt-get install netcat-traditional -y
