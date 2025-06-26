@@ -49,7 +49,7 @@ jobs:
           from: GitHub Actions <no-reply@github.com>
           # The recipient email address(es), comma-separated for multiple.
           # Consider storing this as a secret if recipients are sensitive.
-          to: sergio.martinezc@outlook.com
+          to: panw.sm.labs@outlook.com
           # The subject line of the email. Uses GitHub context variables for dynamism.
           subject: Workflow Status Update for ${{ github.repository }} - Run #${{ github.run_number }}
           # The plain text body of the email. Uses GitHub context variables.
