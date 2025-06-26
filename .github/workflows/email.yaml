@@ -32,7 +32,7 @@ jobs:
           # It's highly recommended to store this as a GitHub Secret if it's not publicly known.
           server_address: ${{ secrets.SMTP_SERVER_ADDRESS }}
           # The port of your SMTP server (e.g., 465 for SSL, 587 for TLS/STARTTLS).
-          server_port: 587
+          server_port: 465
           # Set to 'true' to use SSL/TLS encryption.
           secure: true
 
