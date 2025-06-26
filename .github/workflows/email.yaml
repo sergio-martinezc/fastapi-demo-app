@@ -1,0 +1,82 @@
+# .github/workflows/email-notification.yml
+
+# This workflow demonstrates how to send an email notification
+# using the 'dawidd6/action-send-mail' GitHub Action.
+
+name: Email Notification Workflow
+
+# Trigger this workflow on push events to the 'main' branch
+# You can customize this to other events like 'pull_request', 'workflow_dispatch', etc.
+on:
+  push:
+    branches:
+      - main
+  # You can also trigger it manually for testing purposes
+  workflow_dispatch:
+
+jobs:
+  send_email_job:
+    runs-on: ubuntu-latest # The runner environment for this job
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Action to check out your repository code
+
+      - name: Send email notification on workflow completion
+        # This step uses the 'dawidd6/action-send-mail' action to send an email.
+        # Ensure you have configured your email credentials as GitHub Secrets.
+        uses: dawidd6/action-send-mail@v3
+        with:
+          # --- SMTP Server Configuration ---
+          # The address of your SMTP server (e.g., smtp.gmail.com, smtp.office365.com).
+          # It's highly recommended to store this as a GitHub Secret if it's not publicly known.
+          server_address: ${{ secrets.SMTP_SERVER_ADDRESS }}
+          # The port of your SMTP server (e.g., 465 for SSL, 587 for TLS/STARTTLS).
+          server_port: 587
+          # Set to 'true' to use SSL/TLS encryption.
+          secure: true
+
+          # --- Authentication Credentials ---
+          # Your email account username. MUST be stored as a GitHub Secret.
+          username: ${{ secrets.EMAIL_USERNAME }}
+          # Your email account password. MUST be stored as a GitHub Secret.
+          # For Gmail, you might need an App Password if 2FA is enabled.
+          password: ${{ secrets.EMAIL_PASSWORD }}
+
+          # --- Email Content and Recipients ---
+          # The email address that appears as the sender.
+          # Can be a generic notification email or your actual username email.
+          from: GitHub Actions <no-reply@github.com>
+          # The recipient email address(es), comma-separated for multiple.
+          # Consider storing this as a secret if recipients are sensitive.
+          to: your-recipient-email@example.com
+          # The subject line of the email. Uses GitHub context variables for dynamism.
+          subject: Workflow Status Update for ${{ github.repository }} - Run #${{ github.run_number }}
+          # The plain text body of the email. Uses GitHub context variables.
+          # You can also use 'html_body' for HTML formatted emails.
+          body: |
+            Hello Team,
+
+            The GitHub Actions workflow 'Email Notification Workflow' has completed.
+
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Workflow Run ID: ${{ github.run_id }}
+            Workflow Status: ${{ job.status }}
+
+            Triggered by: ${{ github.actor }}
+            Commit Message: "${{ github.event.head_commit.message }}"
+
+            You can view the full workflow run details here:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Best regards,
+            GitHub Actions Bot
+
+          # (Optional) Attachments - uncomment and specify paths if needed
+          # attachments: path/to/your/log.txt, path/to/your/report.pdf
+
+        # (Optional) Add a condition to send email only on specific job status (e.g., failure)
+        # Uncomment the line below to send email only if the job fails.
+        # if: always() # Sends email regardless of success/failure, useful for debugging
+        # if: failure() # Sends email only if the job or a previous step failed
