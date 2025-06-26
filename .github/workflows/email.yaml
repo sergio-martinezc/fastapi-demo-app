@@ -55,7 +55,7 @@ jobs:
           # The plain text body of the email. Uses GitHub context variables.
           # You can also use 'html_body' for HTML formatted emails.
           body: |
-            Hello Team,
+            Hello NinjaMaster,
 
             The GitHub Actions workflow 'Email Notification Workflow' has completed.
 
