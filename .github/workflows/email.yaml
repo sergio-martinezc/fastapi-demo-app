@@ -3,7 +3,7 @@
 # This workflow demonstrates how to send an email notification
 # using the 'dawidd6/action-send-mail' GitHub Action.
 
-name: Email Notification Workflow
+name: Email Notification Workflow 
 
 # Trigger this workflow on push events to the 'main' branch
 # You can customize this to other events like 'pull_request', 'workflow_dispatch', etc.
