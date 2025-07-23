@@ -1,12 +1,27 @@
-name: Prisma Cloud Compute Image Scan  
+name: Prisma Cloud Compute Image Scan
 
-on: [push]  
-  
-env: 
+on: [push]
+
+env:
   IMAGE_NAME: smartinezc/fastapi-demo-app
 
 jobs:
-  checkov: 
+  # This is the new job to run Yor for tagging IaC resources.
+  yor_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          # A fetch-depth of 0 is required for yor to be able to tag all files.
+          fetch-depth: 0
+      - name: Run yor action
+        uses: bridgecrewio/yor-action@main
+
+  checkov:
+    # If the checkov scan depends on the build-and-scan job,
+    # you might want to consider if yor_scan should also have this dependency.
+    # For now, it will run in parallel with the 'needs' jobs.
     needs: build-and-scan
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +34,7 @@ jobs:
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: . 
+          directory: .
           api-key: ${{ secrets.PCC_USER }}::${{ secrets.PCC_PASS }}
           prisma-api-url: ${{ secrets.PRISMA_CLOUD_URL }}
           output_format: cli
