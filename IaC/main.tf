@@ -9,4 +9,4 @@ provider "aws" {
 # Yor escaneará este bloque y le añadirá las etiquetas
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "bucket-yor-traced" # El nombre que especificaste
-}
+} 
