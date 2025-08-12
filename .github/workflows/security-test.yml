@@ -2,7 +2,7 @@ name: Prisma Cloud Compute Image Scan
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ] 
   
 jobs:
   checkov:
