@@ -18,7 +18,7 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: .
-          api-key: ace48371-89ca-4173-8c8f-4cef4d825485::Lez3TmiCany8BlnHCXkmxWURCFk=
+          api-key: 88766dc7-1e53-4915-a2da-54bbb0b6defe::K4vspm7oDGvPPRdFA5w2rU7ipDA=
           prisma-api-url: https://api2.prismacloud.io
           #prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
           output_format: cli
