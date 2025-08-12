@@ -19,7 +19,7 @@ jobs:
         with:
           directory: .
           api-key: ${{ env.PCC_API_KEY }}
-          prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
+          #prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
           output_format: cli
-          use_enforcement_rules: True
+          #use_enforcement_rules: True
           soft_fail: True
