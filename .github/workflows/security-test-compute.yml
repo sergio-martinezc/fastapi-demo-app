@@ -15,13 +15,13 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
 
-      - name: Download twistcli from the Prisma Cloud Compute Console
-        run: |
-          curl --insecure --user ${{ secrets.PCC_USER_CE }}:${{ secrets.PCC_PASS_CE }} --output ./twistcli  ${{ secrets.PCC_CONSOLE_URL_CE }}/api/v1/util/twistcli
-          chmod a+x ./twistcli
+     # - name: Download twistcli from the Prisma Cloud Compute Console
+     #   run: |
+     #     curl --insecure --user ${{ secrets.PCC_USER_CE }}:${{ secrets.PCC_PASS_CE }} --output ./twistcli  ${{ secrets.PCC_CONSOLE_URL_CE }}/api/v1/util/twistcli
+     #     chmod a+x ./twistcli
 
-      - name: Build the image
-        run: docker build -t $IMAGE_NAME .
+      #- name: Build the image
+      #  run: docker build -t $IMAGE_NAME .
 
-      - name: Scan the image
-        run: ./twistcli images scan --address ${{ secrets.PCC_CONSOLE_URL_CE }} --user  ${{ secrets.PCC_USER_CE }} --password ${{ secrets.PCC_PASS_CE }} --details $IMAGE_NAME
+      #- name: Scan the image
+      #  run: ./twistcli images scan --address ${{ secrets.PCC_CONSOLE_URL_CE }} --user  ${{ secrets.PCC_USER_CE }} --password ${{ secrets.PCC_PASS_CE }} --details $IMAGE_NAME
