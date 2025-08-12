@@ -25,4 +25,4 @@ jobs:
           #prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
           output_format: cli
           use_enforcement_rules: True
-          soft_fail: True
+          #soft_fail: True
