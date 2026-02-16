@@ -1,4 +1,4 @@
-name: Prisma Cloud Checkov Analysis
+name: Prisma Cloud Checkov and twistcli images scan 
 
 on:
   push:
@@ -7,9 +7,10 @@ env:
   # Definimos la URL como variable de ambiente para reutilizarla
   PC_API_URL: https://api2.prismacloud.io
   PC_PATH_TO_CONSOLE: https://us-east1.cloud.twistlock.com/us-2-158320372
-  IMAGE_NAME: my-app:${{ github.sha }}
+  IMAGE_NAME: image-name:${{ github.sha }}
 jobs:
   checkov:
+    name: prisma-cloud-code-scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
