@@ -3,7 +3,10 @@ name: Prisma Cloud Checkov Analysis
 on:
   push:
     branches: [ "main" ] 
-  
+env:
+  # Definimos la URL como variable de ambiente para reutilizarla
+  PC_API_URL: https://api2.prismacloud.io
+  IMAGE_NAME: my-app:${{ github.sha }}
 jobs:
   checkov:
     runs-on: ubuntu-latest
@@ -21,8 +24,28 @@ jobs:
           api-key: ${{ secrets.PC_ACCESS_KEY_ID }}::${{ secrets.PC_SECRET_ACCESS_KEY}}
           #api-key: 97aa1b08-40a4-41f1-ab28-56a7a4ef1b63::jnzkv0O5ns52+va1ziGFvqQq9r4=
           #prisma-api-url: ${{ env.PC_API_URL }}
-          prisma-api-url: https://api2.prismacloud.io
-          #prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
+          prisma-api-url: ${{ env.PC_API_URL }}          #prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
           output_format: cli
           #use_enforcement_rules: True
           soft_fail: True
+      # ESCANEO DE IMAGEN CON TWISTCLI
+      - name: Build Docker Image
+        run: |
+          docker build -t $IMAGE_NAME .
+
+      - name: Download twistcli
+        run: |
+          # Descargamos el binario directamente desde tu consola de Prisma Cloud
+          curl -k -u ${{ secrets.PC_ACCESS_KEY_ID }}:${{ secrets.PC_SECRET_ACCESS_KEY }} \
+            "${{ env.PC_API_URL }}/twctl/linux/twistcli" -o twistcli
+          chmod +x twistcli
+
+      - name: Scan Image with twistcli
+        run: |
+          # Ejecutar el escaneo enviando los resultados a la consola
+          ./twistcli images scan \
+            --address ${{ env.PC_API_URL }} \
+            --u ${{ secrets.PC_ACCESS_KEY_ID }} \
+            --p ${{ secrets.PC_SECRET_ACCESS_KEY }} \
+            --details \
+            $IMAGE_NAME
