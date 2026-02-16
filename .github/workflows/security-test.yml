@@ -44,3 +44,8 @@ jobs:
       - name: Run twistcli images scam
         run: |
           ./twistcli images scan --address ${{ env.PC_PATH_TO_CONSOLE }} --user ${{ secrets.PC_ACCESS_KEY_ID }} --password ${{ secrets.PC_SECRET_ACCESS_KEY }} ${{ env.IMAGE_NAME }}
+
+      # Runs twistcli sandbox
+      - name: Run twistcli sandbox
+        run: |
+          sudo ./twistcli sandbox --address ${{ env.PC_PATH_TO_CONSOLE }} --user ${{secrets.PC_ACCESS_KEY_ID}} --password ${{secrets.PC_SECRET_ACCESS_KEY}} --analysis-duration 2m ${{ env.IMAGE_NAME }}
