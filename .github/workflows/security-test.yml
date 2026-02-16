@@ -34,15 +34,6 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t $IMAGE_NAME .
-
-      - name: Prisma Cloud image scan
-        id: scan
-        uses: PaloAltoNetworks/prisma-cloud-scan@v1
-        with:
-            pcc_console_url: ${{ env.PC_PATH_TO_CONSOLE }}  
-            pcc_user: ${{ secrets.PC_ACCESS_KEY_ID }}
-            pcc_pass: ${{ secrets.PC_SECRET_ACCESS_KEY}}
-            image_name: ${{ env.IMAGE_NAME }}  
   
       - name: Download twistcli from the Prisma Cloud Compute Console
         run: |
