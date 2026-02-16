@@ -33,19 +33,20 @@ jobs:
         run: |
           docker build -t $IMAGE_NAME .
 
-      - name: Download twistcli
+      - name: Prisma Cloud image scan
+        id: scan
+        uses: PaloAltoNetworks/prisma-cloud-scan@v1
+        with:
+            pcc_console_url: ${{ env.PC_API_URL }}  
+            pcc_user: ${{ secrets.PC_ACCESS_KEY_ID }}
+            pcc_pass: ${{ secrets.PC_SECRET_ACCESS_KEY}}
+            image_name: ${{ env.IMAGE_NAME }}  
+  
+      - name: Download twistcli from the Prisma Cloud Compute Console
         run: |
-          # Descargamos el binario directamente desde tu consola de Prisma Cloud
-          curl -k -u ${{ secrets.PC_ACCESS_KEY_ID }}:${{ secrets.PC_SECRET_ACCESS_KEY }} \
-            "${{ env.PC_API_URL }}/twctl/linux/twistcli" -o twistcli
-          chmod +x twistcli
-
-      - name: Scan Image with twistcli
-        run: |
-          # Ejecutar el escaneo enviando los resultados a la consola
-          ./twistcli images scan \
-            --address ${{ env.PC_API_URL }} \
-            --u ${{ secrets.PC_ACCESS_KEY_ID }} \
-            --p ${{ secrets.PC_SECRET_ACCESS_KEY }} \
-            --details \
-            $IMAGE_NAME
+             curl --user ${{ secrets.PC_ACCESS_KEY_ID }}:${{ secrets.PC_SECRET_ACCESS_KEY }} --output ./twistcli ${{ secrets.PC_API_URL }}/api/v1/util/twistcli
+             chmod a+x ./twistcli
+                   
+       # Runs twistcli sandbox
+      - name: Run twistcli sandbox
+        run: sudo ./twistcli image scan --address ${{ secrets.PC_API_URL }} --user ${{secrets.PC_ACCESS_KEY_ID}} --password ${{secrets.PC_SECRET_ACCESS_KEY}} ${{ vars.IMAGE_NAME }}
