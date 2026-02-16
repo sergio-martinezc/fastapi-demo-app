@@ -37,7 +37,7 @@ jobs:
   
       - name: Download twistcli from the Prisma Cloud Compute Console
         run: |
-             curl --progress-bar -L --header "authorization: ${{ env.PC_TOKEN}}" ${{ env.PC_PATH_TO_CONSOLE }}/api/v1/util/twistcli > twistcli
+             curl --user ${{ secrets.PC_ACCESS_KEY_ID }}:${{ secrets.PC_SECRET_ACCESS_KEY }} --output ./twistcli ${{ env.PC_PATH_TO_CONSOLE }}/api/v1/util/twistcli
              chmod a+x ./twistcli
                    
        # Runs twistcli sandbox
