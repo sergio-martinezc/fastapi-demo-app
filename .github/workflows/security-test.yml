@@ -34,7 +34,7 @@ jobs:
         run: |
           docker build -t $IMAGE_NAME .
   
-      - name: Download twistcli from the Prisma Cloud Compute Console
+      - name: Download twistcli from the Prisma Cloud Compute Console 
         run: |
              curl --user ${{ secrets.PC_ACCESS_KEY_ID }}:${{ secrets.PC_SECRET_ACCESS_KEY }} --output ./twistcli ${{ env.PC_PATH_TO_CONSOLE }}/api/v1/util/twistcli
              chmod a+x ./twistcli
