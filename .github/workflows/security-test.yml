@@ -18,10 +18,10 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: .
-          #api-key: ${{ secrets.PC_ACCESS_KEY_ID }}::${{ secrets.PC_SECRET_ACCESS_KEY}}
-          api-key: 97aa1b08-40a4-41f1-ab28-56a7a4ef1b63::jnzkv0O5ns52+va1ziGFvqQq9r4=
-          #prisma-api-url: ${{ env.PC_API_URL }}
-          prisma-api-url: https://api2.prismacloud.io
+          api-key: ${{ secrets.PC_ACCESS_KEY_ID }}::${{ secrets.PC_SECRET_ACCESS_KEY}}
+          #api-key: 97aa1b08-40a4-41f1-ab28-56a7a4ef1b63::jnzkv0O5ns52+va1ziGFvqQq9r4=
+          prisma-api-url: ${{ env.PC_API_URL }}
+          #prisma-api-url: https://api2.prismacloud.io
           #prisma-api-url: ${{ env.PRISMA_CLOUD_URL }}
           output_format: cli
           use_enforcement_rules: True
