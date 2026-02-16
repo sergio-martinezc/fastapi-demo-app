@@ -4,7 +4,9 @@ on:
   push:
     branches: [ "main" ] 
 env:
-  # Definimos la URL como variable de ambiente para reutilizarla
+  # PC_API_URL: API URL del tenent
+  # PC_PATH_TO_CONSOLE: Path to console, Runtime Security - Manage - System - Utilities - Path to console
+  # IMAHE_NAME: Nombre de la imagen
   PC_API_URL: https://api2.prismacloud.io
   PC_PATH_TO_CONSOLE: https://us-east1.cloud.twistlock.com/us-2-158320372
   IMAGE_NAME: image-name:${{ github.sha }}
@@ -19,6 +21,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Test with Checkov
+        # Escaneo con Checkov
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
@@ -30,22 +33,21 @@ jobs:
           output_format: cli
           #use_enforcement_rules: True
           soft_fail: True
-      # ESCANEO DE IMAGEN CON TWISTCLI
       - name: Build Docker Image
         run: |
           docker build -t $IMAGE_NAME .
-  
+        # Descarga de twistcli
       - name: Download twistcli from the Prisma Cloud Compute Console 
         run: |
              curl --user ${{ secrets.PC_ACCESS_KEY_ID }}:${{ secrets.PC_SECRET_ACCESS_KEY }} --output ./twistcli ${{ env.PC_PATH_TO_CONSOLE }}/api/v1/util/twistcli
              chmod a+x ./twistcli
 
-        # Runs twistcli sandbox
+        # Análisis sandbox
       - name: Run twistcli sandbox
         run: |
           sudo ./twistcli sandbox --address ${{ env.PC_PATH_TO_CONSOLE }} --user ${{secrets.PC_ACCESS_KEY_ID}} --password ${{secrets.PC_SECRET_ACCESS_KEY}} --analysis-duration 2m ${{ env.IMAGE_NAME }}
 
-       # Runs twistcli sandbox
+       # análisis de la imagen 
       - name: Run twistcli images scam
         run: |
           ./twistcli images scan --address ${{ env.PC_PATH_TO_CONSOLE }} --user ${{ secrets.PC_ACCESS_KEY_ID }} --password ${{ secrets.PC_SECRET_ACCESS_KEY }} ${{ env.IMAGE_NAME }}
