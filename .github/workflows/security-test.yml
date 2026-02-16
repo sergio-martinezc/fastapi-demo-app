@@ -50,4 +50,4 @@ jobs:
                    
        # Runs twistcli sandbox
       - name: Run twistcli sandbox
-        run: sudo ./twistcli image scan --address ${{ secrets.PC_API_URL }} --user ${{secrets.PC_ACCESS_KEY_ID}} --password ${{secrets.PC_SECRET_ACCESS_KEY}} ${{ vars.IMAGE_NAME }}
+        run: sudo ./twistcli image scan --address ${{ env.PC_PATH_TO_CONSOLE }} --user ${{secrets.PC_ACCESS_KEY_ID}} --password ${{secrets.PC_SECRET_ACCESS_KEY}} ${{ vars.IMAGE_NAME }}
