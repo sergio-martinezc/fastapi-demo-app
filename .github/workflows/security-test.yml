@@ -38,7 +38,7 @@ jobs:
         id: scan
         uses: PaloAltoNetworks/prisma-cloud-scan@v1
         with:
-            pcc_console_url: ${{ env.PC_API_URL }}  
+            pcc_console_url: ${{ env.PC_PATH_TO_CONSOLE }}  
             pcc_user: ${{ secrets.PC_ACCESS_KEY_ID }}
             pcc_pass: ${{ secrets.PC_SECRET_ACCESS_KEY}}
             image_name: ${{ env.IMAGE_NAME }}  
