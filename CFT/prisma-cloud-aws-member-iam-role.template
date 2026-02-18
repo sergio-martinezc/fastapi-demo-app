@@ -25,6 +25,12 @@
     "PrismaCloudRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
+        "Tags": [
+          {
+            "Key": "yor_trace",
+            "Value": "87a046cf-ec11-4c8e-890d-a9ae4738a0c5"
+          }
+        ],
         "ManagedPolicyArns": [
           {
             "Fn::Join": [
